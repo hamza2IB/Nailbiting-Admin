@@ -23,8 +23,6 @@ const VideosModal = ({
   handleChange,
   handleSubmit,
 }) => {
-  if (!isOpen) return null;
-
   const handleOutsideClick = (event) => {
     const modalContent = document.getElementById("modal-content");
     if (modalContent && !modalContent.contains(event.target)) {
