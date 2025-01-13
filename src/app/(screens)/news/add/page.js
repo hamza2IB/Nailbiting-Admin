@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useQuill } from "react-quilljs";
@@ -17,6 +17,7 @@ export default function CreateNotification() {
   const router = useRouter();
   const newsId = searchParams.get("id"); // Extract the `id` parameter from the URL
   const { quill, quillRef } = useQuill();
+  const formikRef = useRef(null);
   const [newsDetail, setNewsDetail] = useState({
     title: "",
     content: "",
@@ -26,6 +27,20 @@ export default function CreateNotification() {
     title: Yup.string().required("タイトルは必須です"),
     content: Yup.string().required("本文は必須です"),
   });
+
+  useEffect(() => {
+    if (quill) {
+      if (formikRef.current) {
+      const handleTextChange = () => {
+        formikRef.current.setFieldValue("content", quill.root.innerHTML);
+      };
+      quill.on("text-change", handleTextChange);
+      return () => {
+        quill.off("text-change", handleTextChange); // Cleanup listener
+      };
+    }
+  }
+  }, [quill]);
 
   useEffect(() => {
     const fetchNewsDetails = async () => {
@@ -60,6 +75,7 @@ export default function CreateNotification() {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="bg-white p-6 rounded-[20px] border border-[#EAECF0]">
           <Formik
+            innerRef={formikRef}
             initialValues={{
               title: newsDetail.title || "",
               content: newsDetail.body || "",
@@ -85,20 +101,7 @@ export default function CreateNotification() {
             }}
           >
             {({ errors, touched, setFieldValue }) => {
-              // Sync Quill content with Formik
-              useEffect(() => {
-                if (quill) {
-                  const handleTextChange = () => {
-                    setFieldValue("content", quill.root.innerHTML);
-                  };
-                  quill.on("text-change", handleTextChange);
-                  return () => {
-                    quill.off("text-change", handleTextChange); // Cleanup listener
-                  };
-                }
-              }, [quill, setFieldValue]);
-
-              return (
+             return (
                 <Form className="space-y-6">
                   <div className="pb-5">
                     <h1 className="text-[26px] font-bold text-[#181A20]">
