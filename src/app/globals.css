@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Elsie:wght@400;900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.ql-container {
+    margin-top: 0px !important;
+    border-color: #EAECF0 !important;
+} 
+.ql-toolbar {
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    border-color: #EAECF0 !important;
+    margin-top: 16px !important;
+}
+.icon-link:hover svg path{
+    stroke: #199A8E;
+}
+.notify-description ol{
+    padding-left: 15px;
+}
+ .notify-description li[data-list="bullet"]{
+    list-style: disc;
+    padding-left: 12px;
+ }
+ .notify-description li[data-list="ordered"]{
+    list-style: disc;
+    padding-left: 12px;
+ }
+ .notify-description li[data-list="bullet"]{
+    list-style: disc;
+    padding-left: 12px;
+ }
+ .ql-editor ol{
+    padding-left: 0px!important;
+ }
+ .ql-editor li[data-list="bullet"]{
+    padding-left: 1rem!important;
+ }
