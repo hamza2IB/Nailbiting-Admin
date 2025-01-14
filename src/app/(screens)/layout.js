@@ -5,16 +5,10 @@ import Loader from "@/components/Splash";
 import Sidebar from "../../components/shared/Sidebar";
 
 export default function RootLayout({ children }) {
-  const router = useRouter();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    const currentPath = router.asPath;
-    if (accessToken && currentPath && typeof currentPath === 'string') {
-        redirect(currentPath);
-    }
     setTimeout(() => setLoading(false), 1000);
-  }, [router]);
+  }, []);
 
   return (
     <html lang="en">

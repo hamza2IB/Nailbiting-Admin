@@ -67,9 +67,9 @@ export default function RightUserModal({ isOpen, onClose, user }) {
               <path
                 d="M39 13.75L13 40.25M13 13.75L39 40.25"
                 stroke="#101010"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>

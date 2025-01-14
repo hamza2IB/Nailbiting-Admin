@@ -43,12 +43,12 @@ const VideosModal = ({
 
   return (
     <div className="fixed inset-0 p-10 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-white  w-full max-w-[1320px]">
+      <div id="modal-content" className="bg-white  w-full max-w-[1320px]">
+
         <h1 className="text-xl font-semibold text-center border-b py-6 ">
           動画追加
         </h1>
-
-        <div id="modal-content" className="bg-white p-10 ">
+        <div className="bg-white p-10 ">
           <div className="mx-auto ">
             <Formik
               initialValues={formData}
