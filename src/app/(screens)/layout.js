@@ -9,21 +9,9 @@ export default function RootLayout({ children }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    const isTokenExpired = (token) => {
-      if (!token) return true;
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.exp * 1000 < Date.now();
-    };
     const currentPath = router.asPath;
-    if (accessToken && !isTokenExpired(accessToken)) {
-      if (currentPath && typeof currentPath === 'string') {
+    if (accessToken && currentPath && typeof currentPath === 'string') {
         redirect(currentPath);
-      } else {
-        console.log("Current path is undefined or not a string");
-      }
-    } else {
-      localStorage.removeItem("accessToken");
-      router.replace("/auth/login");
     }
     setTimeout(() => setLoading(false), 1000);
   }, [router]);

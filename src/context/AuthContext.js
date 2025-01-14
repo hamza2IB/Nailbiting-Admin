@@ -18,8 +18,9 @@ export const AuthProvider = ({ children }) => {
 		}
 	}, [])
 
-	const login = (token) => {
+	const login = (token, refreshToken) => {
 		localStorage.setItem('accessToken', token)
+		localStorage.setItem('refreshToken', refreshToken)
 		setIsAuthenticated(true)
 		router.push('/')
 	}

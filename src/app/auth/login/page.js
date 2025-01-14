@@ -23,9 +23,10 @@ export default function Login() {
 			setIsLoading(true)
 			setError('')
 			const response = await loginUser(values)
-			const { accessToken } = response.user
-			login(accessToken)
+			const { accessToken, refreshToken } = response.user
+			login(accessToken, refreshToken)
 		} catch (err) {
+			console.log(err)
 			setError(err instanceof Error ? err?.response?.data?.message : 'ログイン中にエラーが発生しました')
 			if (err?.response?.data?.message == 'Your account is not verified. Please verify your email.') {
 				setTimeout(async () => {
