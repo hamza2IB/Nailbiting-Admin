@@ -35,10 +35,16 @@ api.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return api(originalRequest);
         } catch (error) {
+          location.reload();
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
 					console.log(error, 'Error refreshing access token');
         }
+      } else{
+        location.reload();
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        console.log('No refresh token found');
       }
     }
     return Promise.reject(error);
