@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowLeft, Eye } from 'lucide-react'
 import RightUserModal from '@/components/users/rightUserModal'
 import { getUserById } from '@/actions/user/user'
+import { getMonthlyAssessments } from '@/actions/assessment/assessment'
 import EvaluationShimmer from '@/components/shimmer/evaluationShimmer'
 import UserDetailShimmer from '@/components/shimmer/UserDetailShimmer'
 import PhotosShimmer from '@/components/shimmer/ImagesShimmer'
@@ -27,11 +28,10 @@ function UserDetail({ params }) {
 			try {
 				setIsLoading(true)
 				const userData = await getUserById(userId)
+				let date = new Date().getMonth() + 1
+				let year = new Date().getFullYear()
+				await fetchAssessmentByMonth(userId, date, year)
 				setUser(userData)
-				const nailPhotos = userData.selfAssessmentResults.map((result) => result.nailPhotos).flat()
-				setAllNailPhotos(nailPhotos)
-
-				filterEvaluations(userData.selfAssessmentResults)
 			} catch (error) {
 				console.error('Failed to fetch user information:', error)
 			} finally {
@@ -40,9 +40,30 @@ function UserDetail({ params }) {
 		}
 	}
 
+	const fetchAssessmentByMonth = async (userId, selectedMonth, selectedYear) => {
+		if (userId && selectedMonth && selectedYear) {
+			try {
+				const month = /^[0-9]+$/.test(selectedMonth) ? selectedMonth : selectedMonth.replace(/[^\d]/g, '');
+				setIsLoading(true)
+				const assessments = await getMonthlyAssessments(userId, month, selectedYear)
+				const nailPhotos = assessments.map((result) => result.nailPhoto).flat()
+				setAllNailPhotos(nailPhotos)
+				setFilteredEvaluations(assessments)
+			} catch (error) {
+				console.error('Failed to fetch assessment data:', error)
+			} finally {
+				setIsLoading(false)
+			}
+		}
+	}
+
 	useEffect(() => {
 		fetchUser()
-	}, [userId, selectedMonth, selectedYear])
+	}, [userId])
+
+	useEffect(() => {
+		fetchAssessmentByMonth(userId, selectedMonth, selectedYear)
+	}, [selectedMonth, selectedYear])
 
 	const months = Array.from({ length: 12 }, (_, i) => `${i + 1}月`)
 	const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i)
@@ -53,9 +74,10 @@ function UserDetail({ params }) {
 		}
 	}
 
-	const handleMonthSelect = (month) => {
+	const handleMonthSelect = async (month) => {
 		setSelectedMonth(month)
 		setIsDropdownOpen(false)
+		await fetchAssessmentByMonth(userId, month, selectedYear)
 	}
 
 	const handleYearSelect = (year) => {
@@ -174,11 +196,11 @@ function UserDetail({ params }) {
 													: 'N/A'}
 											</td>
 											<td className='py-4 px-6 flex justify-center items-center max-w-32'>
-												<div>{evaluation?.totalPoints || 'N/A'}/10</div>
+												<div>{evaluation?.pointRating || 'N/A'}/5</div>
 											</td>
-											<td className='py-4 px-6'>{renderStars(evaluation?.responses[1]?.answer || 'N/A')}</td>
+											<td className='py-4 px-6'>{renderStars(evaluation?.starRating || 'N/A')}</td>
 											<td className='py-4 px-6 flex justify-center items-center max-w-28'>
-												<div>{evaluation?.monthlyPoints}</div>
+												<div>{evaluation?.monthlyPoints || 'N/A'}</div>
 											</td>
 											<td className='py-4 px-6'>
 												<div className='flex justify-center'>
@@ -224,14 +246,14 @@ function UserDetail({ params }) {
 						<img
 							src='/svgs/videos/eye.svg'
 							alt={`Photo ${index + 1}`}
-							onClick={() => setSelectedPhoto(photo.key)}
+							onClick={() => setSelectedPhoto(photo)}
 							className='absolute inset-0 m-auto w-10 h-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20'
 						/>
 						<img
-							src={photo.key}
+							src={photo}
 							alt={`Photo ${index + 1}`}
 							className='object-cover object-top hover:cursor-pointer h-[250px] z-10 sm:h-full w-full'
-							onClick={() => setSelectedPhoto(photo.key)}
+							onClick={() => setSelectedPhoto(photo)}
 						/>
 					</div>
 				))}
