@@ -196,7 +196,7 @@ function UserDetail({ params }) {
 													: 'N/A'}
 											</td>
 											<td className='py-4 px-6 flex justify-center items-center max-w-32'>
-												<div>{evaluation?.pointRating || 'N/A'}/5</div>
+												<div>{evaluation?.pointRating ? `${evaluation?.pointRating}/5` : 'N/A'}</div>
 											</td>
 											<td className='py-4 px-6'>{renderStars(evaluation?.starRating || 'N/A')}</td>
 											<td className='py-4 px-6 flex justify-center items-center max-w-28'>

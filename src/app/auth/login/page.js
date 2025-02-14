@@ -51,10 +51,10 @@ export default function Login() {
 				/>
 				{/* Logo and Title */}
 				<div className='flex flex-col items-center'>
-					<div className='w-12 h-12 rounded-full flex items-center justify-center'>
-						<Image src='/svgs/logo.svg' alt='Logo' width={66} height={66} className='text-white' />
+					<div className='rounded-full flex items-center justify-center'>
+						<Image src='/svgs/logo.svg' alt='Logo' width={205} height={126} className='text-white' />
 					</div>
-					<h1 className='text-[26px] font-bold text-[#199A8E] mb-6'>爪噛み症アプリ</h1>
+					<h1 className='text-[15px] leading-[17.73px] font-normal text-[#101828] my-6'>抜毛・爪噛み・皮膚むしり症改善アプリ</h1>
 					<h1 className='text-[30px] font-semibold text-[#101828] leading-[38px] mb-3'>ログインページ</h1>
 					<p className='mt-2 text-[#475467] text-center'>下記よりログイン情報をご入力ください</p>
 				</div>

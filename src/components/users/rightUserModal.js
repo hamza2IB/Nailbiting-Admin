@@ -85,13 +85,26 @@ export default function RightUserModal({ isOpen, onClose, user }) {
 								<p>{user?.starRating}</p>
 							</div>
 						</div>
-						<div className='rounded-lg flex gap-4 overflow-hidden overflow-x-auto'>
-							<img
-								src={user?.nailPhoto}
-								alt={`Nail photo`}
-								className='w-full min-w-[300px]  max-h-[400px] rounded-lg object-cover'
-							/>
-						</div>
+						{user?.nailPhoto && (
+							<div className='rounded-lg flex gap-4 overflow-hidden overflow-x-auto'>
+								<img
+									src={user?.nailPhoto}
+									alt={`Nail photo`}
+									className='w-full min-w-[300px]  max-h-[400px] rounded-lg object-cover'
+								/>
+							</div>
+						)}
+						{user?.message && (
+							<>
+								<div className='flex items-center gap-2 border-b pb-[18px]'></div>
+								<div className='space-y-4'>
+									<p className=' font-bold text-[18px] text-[#000000] '>フリーテキスト</p>
+									<div className=' text-[18px] text-[#3C3C43D9] '>
+										<p>{user?.message}</p>
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			)}

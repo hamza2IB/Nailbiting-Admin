@@ -165,7 +165,7 @@ export default function Sidebar() {
       {isOpen && (
         <nav
           ref={sidebarRef}
-          className={`sidebar p-6 bg-white w-[300px] flex flex-col justify-between text-black h-full fixed left-0 top-0 shadow-lg ${
+          className={`sidebar p-6 py-[32px] bg-white w-[300px] flex flex-col justify-between text-black h-full fixed left-0 top-0 shadow-lg ${
             isOpen ? "block" : "hidden"
           }`}
         >
@@ -180,11 +180,11 @@ export default function Sidebar() {
               <Image
                 src="/svgs/logoSide.svg"
                 alt="Logo"
-                width={66}
-                height={66}
+                width={265}
+                height={72}
                 className="text-white"
               />
-              <h1 className="text-[25px] text-[#199A8E]">爪噛み症アプリ</h1>
+              {/* <h1 className="text-[25px] text-[#199A8E]">爪噛み症アプリ</h1> */}
             </div>
             </Link>
             {navItems.map((item) => (
