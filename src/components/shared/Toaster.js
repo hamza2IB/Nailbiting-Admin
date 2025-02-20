@@ -42,7 +42,7 @@ export default function Toaster({ type, message, onClose }) {
 
   return (
     <div className={`${bgColor} ${borderColor} border-l-4 p-4 mb-6`}>
-      <p className={`text-sm ${textColor}`}>{message}</p>
+      <p className={`text-sm  ${textColor} toasty-msg`}>{message}</p>
     </div>
   );
 }
