@@ -58,7 +58,7 @@ describe("Login Successfully", function () {
   });
 });
 
-describe("Login check Api Successfully ", function () {
+describe("Login check API Successfully ", function () {
   it("logs in with correct credentials", () => {
     cy.visit("auth/login");
 
