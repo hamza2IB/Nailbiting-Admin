@@ -61,12 +61,13 @@ export default function NewsCard({ news, onDelete, onEdit }) {
 						__html: news?.body,
 					}}></div>
 				{dropdownVisible && (
-					<div ref={dropdownRef} className='absolute right-8 top-8 z-20 bg-white border rounded shadow-md mt-1'>
-						<button className='block px-4 py-2 text-left hover:bg-[#D3FFF2]' onClick={onDelete}>
+					<div ref={dropdownRef} className='absolute right-8 top-8 z-20 bg-white border rounded shadow-md mt-1' data-testid="dropdown-menu">
+						<button className='block w-full px-4 py-2 text-left hover:bg-[#D3FFF2]' onClick={onDelete} data-testid="delete-button">
 							Delete
 						</button>
 						<button
 							className='block w-full px-4 py-2 text-left hover:bg-[#D3FFF2]'
+							data-testid="edit-button"
 							onClick={() => {
 								onEdit(news.id)
 								setDropdownVisible(false)

@@ -23,6 +23,7 @@ const RenderField = ({ id, label, name, type, placeholder, error, className, opt
 							selectedOptions.map((option) => option.value)
 						)
 					}
+					data-testid="user-select"
 				/>
 			) : (
 				<Field
