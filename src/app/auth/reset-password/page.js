@@ -43,6 +43,7 @@ export default function NewPassword() {
 
       // Use the new resetPassword API service
       await resetPassword(email, otpString, values.password);
+      localStorage.removeItem('otp')
       values.otp = ["", "", "", "", ""];
       values.password = "";
       values.confirmPassword = "";
@@ -64,7 +65,8 @@ export default function NewPassword() {
     try {
       setIsLoading(true);
       setError("");
-      await resendOTP(email);
+      const data = await resendOTP(email);
+      localStorage.setItem('otp', data.otp)
       setIsSuccess(true);
       setIsOTPExpired(true);
       setTimeout(() => {
