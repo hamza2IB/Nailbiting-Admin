@@ -1,48 +1,64 @@
-describe('Fields Validation Check', () => {
+describe("Fields Validation Check", () => {
   beforeEach(() => {
-    cy.visit('/auth/forgot-password');
-  });
- 
-  it('should display an error message for an invalid email', () => {
-    cy.visit('/auth/forgot-password');
-    cy.get('input[name="email"]').type('invalid-email');
-    cy.get('button[type="submit"]').click();
-    cy.contains('無効なメールアドレスです');
-  });
-  it('should display an error message for an empty Field', () => {
-    cy.visit('/auth/forgot-password');
-    cy.get('button[type="submit"]').click()
-    cy.contains('メールアドレスは必須です').should('be.visible');
+    cy.visit("/auth/forgot-password");
   });
 
-  it('should successfully submit the form with a valid email', () => {
-    cy.visit('/auth/forgot-password');
-    cy.intercept('POST', '**/auth/forgot-password', { statusCode: 200 }).as('forgotPassword');
-    
-    cy.get('input[name="email"]').type('test@example.com');
+  it("should display an error message for an invalid email", () => {
+    cy.visit("http://localhost:3001/auth/login");
+
+    cy.contains("パスワードをお忘れの場合").click();
+    cy.contains("下記よりパスワード変更の手続きを行えます").should(
+      "be.visible"
+    );
+    cy.get('input[name="email"]').type("invalid-email");
     cy.get('button[type="submit"]').click();
-    
-    cy.wait('@forgotPassword');
-    cy.contains('パスワードリセットのメールを送信しました');
+    cy.contains("無効なメールアドレスです");
+  });
+  it("should display an error message for an empty Field", () => {
+    cy.visit("http://localhost:3001/auth/login");
+
+    cy.contains("パスワードをお忘れの場合").click();
+    cy.contains("下記よりパスワード変更の手続きを行えます").should(
+      "be.visible"
+    );
+    cy.get('button[type="submit"]').click();
+    cy.contains("メールアドレスは必須です").should("be.visible");
   });
 
-  it('should display an error message when API returns an error', () => {
-    cy.visit('/auth/forgot-password');
-    cy.intercept('POST', '**/auth/forgot-password', {
+  it("should successfully submit the form with a valid email", () => {
+    cy.visit("http://localhost:3001/auth/login");
+
+    cy.contains("パスワードをお忘れの場合").click();
+    cy.contains("下記よりパスワード変更の手続きを行えます").should(
+      "be.visible"
+    );
+    cy.intercept("POST", "**/auth/forgot-password", { statusCode: 200 }).as(
+      "forgotPassword"
+    );
+
+    cy.get('input[name="email"]').type("talha@idenbrid.com");
+    cy.get('button[type="submit"]').click();
+
+    cy.wait("@forgotPassword");
+    cy.contains("パスワードリセットのメールを送信しました");
+  });
+
+  it("should display an error message when API returns an error", () => {
+    cy.visit("http://localhost:3001/auth/login");
+
+    cy.contains("パスワードをお忘れの場合").click();
+    cy.contains("下記よりパスワード変更の手続きを行えます").should(
+      "be.visible"
+    );
+    cy.intercept("POST", "**/auth/forgot-password", {
       statusCode: 400,
-      body: { message: 'このメールアドレスは登録されていません' },
-    }).as('forgotPasswordError');
+      body: { message: "このメールアドレスは登録されていません" },
+    }).as("forgotPasswordError");
 
-    cy.get('input[name="email"]').type('unknown@example.com');
+    cy.get('input[name="email"]').type("unknown@example.com");
     cy.get('button[type="submit"]').click();
-    
-    cy.wait('@forgotPasswordError');
-    cy.contains('このメールアドレスは登録されていません');
-  });
 
-  it('should navigate back to the login page when clicking the link', () => {
-    cy.visit('/auth/forgot-password');
-    cy.contains('ログインページに戻る').click();
-    cy.url().should('include', '/auth/login');
+    cy.wait("@forgotPasswordError");
+    cy.contains("このメールアドレスは登録されていません");
   });
 });

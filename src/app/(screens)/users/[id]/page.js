@@ -210,7 +210,7 @@ function UserDetail({ params }) {
 															setSelectedEvaluation(evaluation)
 														}}
 														className='p-2 hover:bg-gray-100 rounded-full'>
-														<Eye className='w-5 h-5 text-gray-600' />
+														<Eye id='eye-icon-btn' className='w-5 h-5 text-gray-600' />
 													</button>
 												</div>
 											</td>
