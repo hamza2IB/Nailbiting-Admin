@@ -12,8 +12,8 @@ export const resetPassword = async (email, otp, password) => {
   return response.data;
 };
 export const resendOTP = async (email) => {
-  await api.post("/auth/resend-otp", { email });
-  return true;
+  const response =await api.post("/auth/resend-otp", { email });
+  return response.data;
 };
 export const changeEmail = async (email) => {
   const response = await api.put("/user/change-email", { email});

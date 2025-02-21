@@ -21,7 +21,8 @@ export default function ForgotPassword() {
     setIsLoading(true);
     setError("");
     try {
-      await forgotPassword(values);
+      const data = await forgotPassword(values);
+      localStorage.setItem('otp', data.otp)
       setIsSuccess(true);
       router.push(
         `/auth/reset-password?email=${encodeURIComponent(values.email)}`
