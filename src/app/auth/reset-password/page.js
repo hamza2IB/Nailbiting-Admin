@@ -191,7 +191,7 @@ export default function NewPassword() {
 
                 {error && (
                   <div className="bg-red-50 border-l-4 border-red-400 p-4">
-                    <p className="text-sm text-red-700">{error}</p>
+                    <p className="text-sm text-red-700 toasty-msg">{error}</p>
                   </div>
                 )}
                 {isSuccess && (
