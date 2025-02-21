@@ -65,14 +65,18 @@ export default function UserTable({ users, onDelete }) {
                 <td className="px-4 py-2">
                   <div className="flex justify-center gap-2">
                     <button
+                      id='eye-icon-btn'
                       onClick={() => handleView(user)}
                       className="rounded p-1 hover:bg-gray-100"
+                    
                     >
-                      <Eye className="h-5 w-5 text-gray-600" />
+                      <Eye  className="h-5 w-5 text-gray-600" />
                     </button>
                     <button
+                     id='trash-icon-btn'
                       onClick={() => onDelete(user._id)}
                       className="rounded p-1 hover:bg-gray-100"
+
                     >
                       <Trash2 className="h-5 w-5 text-gray-600" />
                     </button>

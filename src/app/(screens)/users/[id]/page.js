@@ -210,7 +210,7 @@ function UserDetail({ params }) {
 															setSelectedEvaluation(evaluation)
 														}}
 														className='p-2 hover:bg-gray-100 rounded-full'>
-														<Eye id='eye-icon-btn' className='w-5 h-5 text-gray-600' />
+														<Eye  className='w-5 h-5 text-gray-600' />
 													</button>
 												</div>
 											</td>
@@ -334,14 +334,14 @@ function UserDetail({ params }) {
 							<div className='flex gap-3 pb-6'>
 								<button
 									onClick={() => setActiveTab('自己評価')}
-									className={`px-10 py-3 rounded-lg transition-colors ${
+									className={`px-10 py-3 rounded-lg transition-colors self-btn ${
 										activeTab === '自己評価' ? 'bg-[#199A8E] text-white' : 'bg-[#ECFDF3] text-[#199A8E]'
 									}`}>
 									自己評価
 								</button>
 								<button
 									onClick={() => setActiveTab('他の写真')}
-									className={`px-10 py-3 rounded-lg transition-colors ${
+									className={`px-10 py-3 rounded-lg transition-colors other-photo ${
 										activeTab === '他の写真' ? 'bg-[#199A8E] text-white' : 'bg-[#ECFDF3] text-[#199A8E]'
 									}`}>
 									他の写真

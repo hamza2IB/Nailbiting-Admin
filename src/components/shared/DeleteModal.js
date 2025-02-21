@@ -87,7 +87,7 @@ export default function DeleteModal({
               </button>
               <button
                 onClick={onConfirm}
-                className="flex-1 rounded-[8px] bg-red-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:outline-none "
+                className="flex-1 rounded-[8px] bg-red-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:outline-none delete-btn"
               >
                 削除
               </button>
