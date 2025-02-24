@@ -19,14 +19,14 @@ describe('News Page Tests', function () {
   //     .and('contain', '新規作成');
   // });
 
-  // it("should display loading shimmer while fetching news", () => {
-  //   cy.get('[data-testid="news-shimmer"]').should('have.length', 5);
-  // });
+  it("should display loading shimmer while fetching news", () => {
+    cy.get('[data-testid="news-shimmer"]').should('have.length', 5);
+  });
 
-  // it("should display news cards when data is loaded", () => {
-  //   cy.get('[data-testid="news-shimmer"]').should('not.exist');
-  //   cy.get('[data-testid="news-card"]').should('have.length.at.least', 1);
-  // });
+  it("should display news cards when data is loaded", () => {
+    cy.get('[data-testid="news-shimmer"]').should('not.exist');
+    cy.get('[data-testid="news-card"]').should('have.length.at.least', 1);
+  });
 
   // it("should handle pagination correctly", () => {
   //   // Wait for loading to complete

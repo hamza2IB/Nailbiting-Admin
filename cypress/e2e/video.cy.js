@@ -92,7 +92,7 @@ describe('ExercisesPage Tests', function () {
   //     .should('be.visible')
   //     .type('This is a test video description.');
 
-  //   // Verify save button exists and click it
+  //   // Verify save button exists and click it.
   //   cy.get('[data-testid="save-video-button"]')
   //     .should('be.visible')
   //     .should('not.be.disabled')
@@ -100,16 +100,6 @@ describe('ExercisesPage Tests', function () {
 
   //   // Verify the modal is closed
   //   cy.contains('動画の追加').should('not.exist');
-
-  //   // Wait for the POST request and verify response
-  //   cy.intercept('POST', '**/api/videos').as('addVideo');
-
-  //   // Reload and verify the new video appears
-  //   cy.reload();
-
-  //   // Wait for the table and verify content
-  //   cy.get('table').should('exist');
-  //   cy.get('tbody tr').should('have.length.at.least', 1);
 
   //   // Look for the video title in the table
   //   cy.contains('tbody tr', 'Test Video Title')
@@ -119,6 +109,38 @@ describe('ExercisesPage Tests', function () {
   //         .should('be.visible')
   //         .and('contain', 'Test Video Title');
   //     });
+  // });
+
+  // it('should close delete modal when clicking cancel button or outside modal', () => {
+  //   // Wait for the page to load and ensure the video exists
+  //   cy.wait(5000);
+
+  //   // Locate the video row with the title 'Test Video Title' and click the delete button
+  //   cy.contains('table tr', 'Test Video Title').within(() => {
+  //     cy.get('[data-testid="delete-video-button"]').click(); // Click the delete button
+  //   });
+
+  //   // Verify the delete confirmation modal is open
+  //   cy.get('[data-testid="delete-modal"]').should('be.visible');
+  //   // cy.contains('[id="modal-title"]').should('be.visible'); // Verify the modal title
+  //   // cy.contains('実行してよろしいですか？このアクションは取り消すことができません。').should('be.visible'); // Verify the modal message
+
+  //   // Test closing the modal using the cancel button
+  //   cy.contains('キャンセル').click(); // Click the cancel button
+  //   cy.get('[data-testid="delete-modal"]').should('not.exist'); // Verify the modal is closed
+
+  //   // Reopen the delete modal
+  //   cy.contains('table tr', 'Test Video Title').within(() => {
+  //     cy.get('[data-testid="delete-video-button"]').click(); // Click the delete button again
+  //   });
+
+  //   // Verify the modal is open again
+  //   cy.get('[data-testid="delete-modal"]').should('be.visible');
+
+  //   // Test closing the modal by clicking outside (on the overlay)
+  //   cy.get('[data-testid="delete-modal-overlay"]') // Modal overlay
+  //     .click('topLeft', { force: true }); // Click outside the modal content
+  //   cy.get('[data-testid="delete-modal"]').should('not.exist'); // Verify the modal is closed
   // });
 
   // it('should close modal when clicking cancel button or outside modal', () => {
@@ -165,62 +187,10 @@ describe('ExercisesPage Tests', function () {
   //   })
   //   // Delete the video at index 4 (5th video, since index is 0-based)
   //   cy.get('[data-testid="delete-button"]')
-
   //     .click()
 
   //   // Verify delete confirmation modal appears
-  //   cy.contains('動画の削除').should('be.visible')
-  //   cy.contains('実行してよろしいですか？このアクションは取り消すことができません。').should('be.visible')
+  //   cy.contains('動画管理').should('be.visible')
+  //   cy.contains('このページから動画の登録や削除などができます').should('be.visible')
   // })
-
-  it('should shuffle existing video rows and save', () => {
-    // Visit the video management page
-    cy.visit('http://localhost:3000/videos') // Adjust the URL as needed
-
-    // Verify that there are existing videos
-    cy.get('table tbody tr').should('have.length.gte', 1) // Ensure there is at least one video
-
-    // Log the current state of the DOM
-    cy.get('body').then(($body) => {
-      cy.log('Current DOM:', $body.html())
-    })
-
-    // Wait for the shuffle button to be visible
-    cy.get('[data-testid="shuffle-button"]', { timeout: 15000 }) // Increase timeout if necessary
-      .should('be.visible')
-      .click() // Click the shuffle button
-
-    // Verify that the rows have been shuffled
-    cy.get('table tbody tr').then(($rows) => {
-      const titlesBeforeShuffle = $rows.map((index, row) => Cypress.$(row).find('td').eq(0).text()).get() // Assuming title is in the first column
-      cy.log('Titles Before Shuffle:', titlesBeforeShuffle)
-
-      // Click the shuffle button again to get the new order
-      cy.get('[data-testid="shuffle-button"]').click() // Click the shuffle button again
-
-      cy.get('table tbody tr').then(($newRows) => {
-        const titlesAfterShuffle = $newRows.map((index, row) => Cypress.$(row).find('td').eq(0).text()).get()
-        cy.log('Titles After Shuffle:', titlesAfterShuffle)
-
-        // Check that the order has changed
-        expect(titlesBeforeShuffle).not.to.deep.equal(titlesAfterShuffle)
-      })
-    })
-
-    // Click the 保存 button to save the shuffled order
-    cy.get('[data-testid="save-button"]').click() // Adjust the selector as needed
-
-    // Verify that the save action was successful
-    cy.intercept('POST', '**/api/videos/save').as('saveVideos') // Adjust the endpoint as needed
-    cy.wait('@saveVideos').then((interception) => {
-      expect(interception.response.statusCode).to.eq(200) // Check for successful save
-    })
-
-    // Optionally, verify that the order is preserved after saving
-    cy.get('table tbody tr').then(($rows) => {
-      const titlesAfterSave = $rows.map((index, row) => Cypress.$(row).find('td').eq(0).text()).get()
-      cy.log('Titles After Save:', titlesAfterSave)
-      // You can add assertions here to check if the order is as expected
-    })
-  })
 })

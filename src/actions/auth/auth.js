@@ -1,8 +1,26 @@
 import { api } from "@/services/api";
+
+
+
 export const loginUser = async (values) => {
-  const response = await api.post("/auth/login", values);
-  return response.data;
+  try {
+    const response = await api.post("/auth/login", values);
+    console.log("Login response:", response);
+
+    const { user } = response.data;
+
+    // Check if the user is an admin
+    if (user.role !== "admin") {
+      return Promise.reject({ response: { data: { message: "Access denied: User is not an admin." } } });
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  }
 };
+
 export const forgotPassword = async (values) => {
   const response = await api.post("/auth/forgot-password", values);
   return response.data;

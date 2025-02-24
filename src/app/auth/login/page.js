@@ -22,12 +22,20 @@ export default function Login() {
 		try {
 			setIsLoading(true)
 			setError('')
-			const response = await loginUser(values)
-			const { accessToken, refreshToken } = response.user
-			login(accessToken, refreshToken)
+			const user = await loginUser(values)
+			// const { accessToken, refreshToken } = response.user
+			if (user?.accessToken && user?.refreshToken) {
+				login(user.accessToken, user.refreshToken);
+			} else {
+				throw new Error("Invalid login response. Tokens are missing.");
+			};
 		} catch (err) {
 			console.log(err)
-			setError(err instanceof Error ? err?.response?.data?.message : 'ログイン中にエラーが発生しました')
+			if (err?.response?.data?.message === "Access denied: User is not an admin.") {
+				setError("You are not authorized to login.");
+			} else {
+				setError(err?.response?.data?.message || 'ログイン中にエラーが発生しました');
+			}
 			if (err?.response?.data?.message == 'Your account is not verified. Please verify your email.') {
 				setTimeout(async () => {
 					await resendOTP(values.email)

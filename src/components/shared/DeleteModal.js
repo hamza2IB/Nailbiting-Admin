@@ -28,11 +28,12 @@ export default function DeleteModal({
   return (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center'
+      data-testid="delete-modal"
       role='dialog'
       aria-modal='true'
       aria-labelledby='modal-title'>
       {/* Overlay */}
-      <div className='fixed inset-0 bg-black/50 transition-opacity' onClick={onClose} aria-hidden='true' />
+      <div className='fixed inset-0 bg-black/50 transition-opacity' onClick={onClose} aria-hidden='true' data-testid="delete-modal-overlay" />
 
       {/* Modal */}
       <div className='relative w-full max-w-[400px] rounded-lg bg-white p-0 shadow-lg'>
