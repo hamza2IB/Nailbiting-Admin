@@ -4,7 +4,7 @@ describe("Fields Validation Check", () => {
   });
 
   it("should display an error message for an invalid email", () => {
-    cy.visit("http://localhost:3001/auth/login");
+    cy.visit("http://localhost:3000/auth/login");
 
     cy.contains("パスワードをお忘れの場合").click();
     cy.contains("下記よりパスワード変更の手続きを行えます").should(
@@ -15,7 +15,7 @@ describe("Fields Validation Check", () => {
     cy.contains("無効なメールアドレスです");
   });
   it("should display an error message for an empty Field", () => {
-    cy.visit("http://localhost:3001/auth/login");
+    cy.visit("http://localhost:3000/auth/login");
 
     cy.contains("パスワードをお忘れの場合").click();
     cy.contains("下記よりパスワード変更の手続きを行えます").should(
@@ -26,7 +26,7 @@ describe("Fields Validation Check", () => {
   });
 
   it("should successfully submit the form with a valid email", () => {
-    cy.visit("http://localhost:3001/auth/login");
+    cy.visit("http://localhost:3000/auth/login");
 
     cy.contains("パスワードをお忘れの場合").click();
     cy.contains("下記よりパスワード変更の手続きを行えます").should(
@@ -44,7 +44,7 @@ describe("Fields Validation Check", () => {
   });
 
   it("should display an error message when API returns an error", () => {
-    cy.visit("http://localhost:3001/auth/login");
+    cy.visit("http://localhost:3000/auth/login");
 
     cy.contains("パスワードをお忘れの場合").click();
     cy.contains("下記よりパスワード変更の手続きを行えます").should(
