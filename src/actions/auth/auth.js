@@ -5,6 +5,7 @@ export const loginUser = async (values) => {
 };
 export const forgotPassword = async (values) => {
   const response = await api.post("/auth/forgot-password", values);
+  console.log("Response", response);
   return response.data;
 };
 export const resetPassword = async (email, otp, password) => {

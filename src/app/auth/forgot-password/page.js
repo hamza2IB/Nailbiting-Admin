@@ -76,7 +76,7 @@ export default function ForgotPassword() {
           >
             {({ errors, touched }) => (
               <Form className="space-y-6">
-                <div className="space-y-2">
+                <div className="space-y-2 forgot-email">
                   <RenderField
                     id="email"
                     label="メールアドレス"
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
 
                 {error && (
                   <div className="bg-red-50 border-l-4 border-red-400 p-4">
-                    <p className="text-sm text-red-700">{error}</p>
+                    <p className="text-sm text-red-700 toasty-msg">{error}</p>
                   </div>
                 )}
 
