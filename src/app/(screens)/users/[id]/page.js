@@ -321,7 +321,7 @@ function UserDetail({ params }) {
 				<div className='mx-auto px-4 py-4 sm:px-6 lg:px-8'>
 					<button onClick={() => router.back()} className='flex items-center text-gray-600 hover:text-gray-900'>
 						<ArrowLeft className='h-5 w-5 mr-2 text-black' />
-						<span className='text-[30px] text-[30px] text-[#000000]'>ユーザー詳細</span>
+						<span className='text-[30px] text-[#000000]'>ユーザー詳細</span>
 					</button>
 				</div>
 			</div>
