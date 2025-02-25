@@ -125,10 +125,11 @@ export default function EmailVerification() {
 								ref={(el) => (inputRefs.current[index] = el)}
 								type='text'
 								maxLength={1}
-								value={digit}
 								onChange={(e) => handleChange(e.target, index)}
 								onKeyDown={(e) => handleKeyDown(e, index)}
 								id={`otp-${index}`} 
+								
+
 								className='w-20 h-20 text-center text-[48px] border-2 text-[#199A8E] rounded-[8px] border-teal-500 focus:outline-none'
 							/>
 						))}
