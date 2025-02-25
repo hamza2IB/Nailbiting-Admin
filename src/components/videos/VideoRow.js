@@ -45,7 +45,7 @@ const VideoRow = ({ video, index, moveVideo, onDelete }) => {
           {/* <button
             className="rounded p-2 hover:bg-gray-100"
             aria-label="View video" >
-            <Eye className="h-5 w-5 text-gray-500" />
+            <Eye className="h-5 w-5 text-gray-500" />6
           </button> */}
           <button
             data-testid='delete-video-button'

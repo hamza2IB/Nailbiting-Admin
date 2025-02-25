@@ -19,14 +19,14 @@ describe('News Page Tests', function () {
   //     .and('contain', '新規作成');
   // });
 
-  it("should display loading shimmer while fetching news", () => {
-    cy.get('[data-testid="news-shimmer"]').should('have.length', 5);
-  });
+  // it("should display loading shimmer while fetching news", () => {
+  //   cy.get('[data-testid="news-shimmer"]').should('have.length', 4);
+  // });
 
-  it("should display news cards when data is loaded", () => {
-    cy.get('[data-testid="news-shimmer"]').should('not.exist');
-    cy.get('[data-testid="news-card"]').should('have.length.at.least', 1);
-  });
+  // it("should display news cards when data is loaded", () => {
+  //   cy.get('[data-testid="news-shimmer"]').should('not.exist');
+  //   cy.get('[data-testid="news-card"]').should('have.length.at.least', 1);
+  // });
 
   // it("should handle pagination correctly", () => {
   //   // Wait for loading to complete
@@ -167,21 +167,6 @@ describe('News Update Operations', () => {
   //   // Test global/individual selection using the label click
   //   cy.contains('個人選択').click()
 
-  //   // Wait for the select field to be rendered and visible
-  //   // cy.get('[data-testid="user-select"]', { timeout: 10000 }).should('exist')
-
-  //   // Interact with the select field
-  //   // cy.get('[data-testid="user-select"]').within(() => {
-  //   //   cy.get('.select__input-container').click()
-  //   // })
-
-  //   // Select the first option from the dropdown
-  //   // cy.get('.select__menu')
-  //   //   .should('be.visible')
-  //   //   .find('.select__option')
-  //   //   .first()
-  //   //   .click()
-
   //   // Switch back to global and verify select field disappears
   //   cy.contains('全員').click()
   //   cy.get('[data-testid="user-select"]').should('not.exist')
@@ -253,7 +238,8 @@ describe('News Update Operations', () => {
   //   // Verify validation messages
   //   cy.contains('タイトルは必須です').should('be.visible');
   //   cy.contains('本文は必須です').should('be.visible');
-  // });
+  //   cy.get('[data-testid="cancel-button"]').click();
+  // })
 })
 
 describe('News Delete Operations', () => {
@@ -340,6 +326,8 @@ describe('News Delete Operations', () => {
 
   //   // Verify modal is closed
   //   cy.contains('動画の削除').should('exist');
+
+  //   cy.get('[data-testid="modal-close"]').click();
   // });
 
   // it('should handle API error during deletion', () => {

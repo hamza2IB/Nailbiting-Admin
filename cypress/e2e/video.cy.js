@@ -9,7 +9,7 @@ describe('ExercisesPage Tests', function () {
     cy.visit('http://localhost:3000/videos')
   })
 
-  // it('should load the page and display the table or empty state message', () => {
+  // it('should load the page and display the table or empty state message',()=>{
   //   cy.contains('動画管理').should('exist'); // Check for the page title
   //   cy.contains('このページから動画の登録や削除などができます').should('exist'); // Check for description
 
@@ -122,8 +122,6 @@ describe('ExercisesPage Tests', function () {
 
   //   // Verify the delete confirmation modal is open
   //   cy.get('[data-testid="delete-modal"]').should('be.visible');
-  //   // cy.contains('[id="modal-title"]').should('be.visible'); // Verify the modal title
-  //   // cy.contains('実行してよろしいですか？このアクションは取り消すことができません。').should('be.visible'); // Verify the modal message
 
   //   // Test closing the modal using the cancel button
   //   cy.contains('キャンセル').click(); // Click the cancel button
@@ -193,4 +191,39 @@ describe('ExercisesPage Tests', function () {
   //   cy.contains('動画管理').should('be.visible')
   //   cy.contains('このページから動画の登録や削除などができます').should('be.visible')
   // })
+
+  // it('should allow dragging and dropping a video row', () => {
+  //   // Wait for the page to load and ensure the table is rendered
+  //   cy.wait(5000); // Adjust the wait time as needed
+  //   cy.get('table tbody tr').should('have.length.gt', 0);
+
+  //   // Get the first and second video rows
+  //   const draggableItem = cy.get('table tbody tr').eq(0); // First row
+  //   const dropTarget = cy.get('table tbody tr').eq(1); // Second row
+
+  //   // Simulate drag-and-drop
+  //   draggableItem.trigger('mousedown', { which: 1, button: 0 });
+  //   dropTarget.trigger('mousemove').trigger('mouseup', { force: true });
+
+  //   // Verify that the rows have been reordered
+  //   cy.get('table tbody tr').eq(0).should('contain', 'Test'); // Assuming "Video 2" is the title of the second video
+  //   cy.get('table tbody tr').eq(1).should('contain', '3rd'); // Assuming "Video 1" is the title of the first video
+  // });
+
+  // it('should move video up and down when dragging', () => {
+  //   cy.get('[data-testid^="video-row-"]')
+  //     .first()
+  //     .invoke('attr', 'data-testid')
+  //     .then((firstVideoId) => {
+  //       cy.get('[data-testid^="video-row-"]')
+  //         .eq(1)
+  //         .invoke('attr', 'data-testid')
+  //         .then((secondVideoId) => {
+  //           cy.get(`[data-testid="${firstVideoId}"]`).trigger('dragstart');
+  //           cy.get(`[data-testid="${secondVideoId}"]`).trigger('drop');
+  //           cy.get('button').contains('保存').click();
+  //           cy.get(`[data-testid="${firstVideoId}"]`).should('not.have.text', 'Test');
+  //         });
+  //     });
+  // });
 })
