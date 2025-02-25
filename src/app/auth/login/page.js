@@ -18,34 +18,37 @@ export default function Login() {
 	const [isLoading, setIsLoading] = useState(false)
 	const [showPassword, setShowPassword] = useState(false) // Password visibility state
 
-	const handleSubmit = async (values) => {
-		try {
-			setIsLoading(true)
-			setError('')
-			const user = await loginUser(values)
-			// const { accessToken, refreshToken } = response.user
-			if (user?.accessToken && user?.refreshToken) {
-				login(user.accessToken, user.refreshToken);
-			} else {
-				throw new Error("Invalid login response. Tokens are missing.");
-			};
-		} catch (err) {
-			console.log(err)
-			if (err?.response?.data?.message === "Access denied: User is not an admin.") {
-				setError("You are not authorized to login.");
-			} else {
-				setError(err?.response?.data?.message || 'ログイン中にエラーが発生しました');
-			}
-			if (err?.response?.data?.message == 'Your account is not verified. Please verify your email.') {
-				setTimeout(async () => {
-					await resendOTP(values.email)
-					router.push(`/auth/register/confirm?email=${encodeURIComponent(values.email)}`)
-				}, 1000)
-			}
-		} finally {
-			setIsLoading(false)
-		}
-	}
+  const handleSubmit = async (values) => {
+    try {
+      setIsLoading(true)
+      setError('')
+      const user = await loginUser(values)
+      // const { accessToken, refreshToken } = response.user
+      if (user?.accessToken && user?.refreshToken) {
+
+				console.log(user?.email, 'user got')
+				localStorage.setItem("emailLocal", JSON.stringify(user?.email));
+        login(user.accessToken, user.refreshToken);
+      } else {
+        throw new Error("Invalid login response. Tokens are missing.");
+      };
+    } catch (err) {
+      console.log(err)
+      if (err?.response?.data?.message === "Access denied: User is not an admin.") {
+        setError("You are not authorized to login.");
+      } else {
+        setError(err?.response?.data?.message || 'ログイン中にエラーが発生しました');
+      }
+      if (err?.response?.data?.message == 'Your account is not verified. Please verify your email.') {
+        setTimeout(async () => {
+          await resendOTP(values.email)
+          router.push(`/auth/register/confirm?email=${encodeURIComponent(values.email)}`)
+        }, 1000)
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center p-4'>
