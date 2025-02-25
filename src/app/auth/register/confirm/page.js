@@ -17,6 +17,8 @@ export default function EmailVerification() {
 	const [isSuccess, setIsSuccess] = useState(false)
 	const [isOTPExpired, setIsOTPExpired] = useState(true)
 	const inputRefs = useRef([])
+	const emailLocal = JSON.parse(localStorage.getItem("emailLocal"));
+  console.log("Logged-in Email:", emailLocal);
 
 	// Initialize refs array
 	useEffect(() => {
@@ -56,7 +58,7 @@ export default function EmailVerification() {
 			setIsLoading(true)
 			setError('')
 			const otpString = otp.join('')
-			await verifyEmail(email, otpString)
+			await verifyEmail(emailLocal,email, otpString)
 			router.push(`/setting`)
 		} catch (err) {
 			setError(err instanceof Error ? err?.response?.data?.message : '認証に失敗しました')
