@@ -119,18 +119,20 @@ export default function EmailVerification() {
 				<div className='p-8 rounded-lg relative z-20'>
 					<form onSubmit={handleSubmit} className='space-y-6'>
 						<div className='flex justify-center gap-2'>
-							{otp.map((digit, index) => (
-								<input
-									key={index}
-									ref={(el) => (inputRefs.current[index] = el)}
-									type='text'
-									maxLength={1}
-									value={digit}
-									onChange={(e) => handleChange(e.target, index)}
-									onKeyDown={(e) => handleKeyDown(e, index)}
-									className='w-20 h-20 text-center text-[48px]  border-2 text-[#199A8E]   rounded-[8px] border-teal-500 focus:outline-none '
-								/>
-							))}
+						{otp.map((digit, index) => (
+							<input
+								key={index}
+								ref={(el) => (inputRefs.current[index] = el)}
+								type='text'
+								maxLength={1}
+								value={digit}
+								onChange={(e) => handleChange(e.target, index)}
+								onKeyDown={(e) => handleKeyDown(e, index)}
+								id={`otp-${index}`} 
+								className='w-20 h-20 text-center text-[48px] border-2 text-[#199A8E] rounded-[8px] border-teal-500 focus:outline-none'
+							/>
+						))}
+
 						</div>
 
 						{error && (
