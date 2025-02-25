@@ -25,6 +25,9 @@ export default function Login() {
       const user = await loginUser(values)
       // const { accessToken, refreshToken } = response.user
       if (user?.accessToken && user?.refreshToken) {
+
+				console.log(user?.email, 'user got')
+				localStorage.setItem("emailLocal", JSON.stringify(user?.email));
         login(user.accessToken, user.refreshToken);
       } else {
         throw new Error("Invalid login response. Tokens are missing.");

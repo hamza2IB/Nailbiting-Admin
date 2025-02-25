@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Loader from "@/components/Splash";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SpectraLayout = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const searchParams = useSearchParams(); // Get query parameters
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -14,17 +15,23 @@ const SpectraLayout = ({ children }) => {
       return payload.exp * 1000 < Date.now(); // Assuming the token is a JWT
     };
 
+    const currentPath = window.location.pathname;
+    const isRegisterConfirm = currentPath.startsWith("/auth/register/confirm");
+
     if (accessToken && !isTokenExpired(accessToken)) {
-      router.replace("/users");
+      if (isRegisterConfirm) {
+        // ✅ Allow navigation to the confirmation page
+        setLoading(false);
+      } else {
+        router.replace("/users");
+      }
     } else {
       router.push("/auth/login");
     }
+
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-//   useEffect(() => {
-//     setTimeout(() => setLoading(false), 1000);
-//   }, []);
   return (
     <html lang="en">
       <body>
@@ -44,3 +51,4 @@ const SpectraLayout = ({ children }) => {
 };
 
 export default SpectraLayout;
+export { SpectraLayout };

@@ -30,11 +30,13 @@ export const resendOTP = async (email) => {
   return response.data
 }
 export const changeEmail = async (email) => {
+  console.log('Email:', email)
   const response = await api.put('/user/change-email', { email })
   return response.data
 }
-export const verifyEmail = async (email, otp) => {
-  const response = await api.put('/user/verify-email', { email, otp })
+export const verifyEmail = async (email,newEmail, otp) => {
+  const response = await api.post('/auth/change-email-verify', { email,newEmail, otp })
+  console.log('Verify Email response:', response.data)
   const { accessToken } = response.data
   localStorage.setItem(`accessToken`, accessToken)
 
