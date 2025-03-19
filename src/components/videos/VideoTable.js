@@ -34,7 +34,7 @@ const VideoTable = ({ videos, onDelete, moveVideo, setVideoToDelete,onSave }) =>
       </table>
     </div>
     <div className="flex justify-end border-t border-gray-200 bg-white p-4">
-      <button onClick={onSave} className="rounded-lg bg-[#199A8E] px-8 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1d736a]">
+      <button data-testid="save-button" onClick={onSave} className="rounded-lg bg-[#199A8E] px-8 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1d736a]">
         保存
       </button>
     </div>

@@ -204,6 +204,7 @@ export default function CreateNotification() {
 									<div className='flex justify-end gap-4'>
 										<Link
 											href='/news'
+											data-testid='cancel-button'
 											className='px-4 py-2 text-sm text-[#344054] bg-[#D3FFF2] rounded-[8px] hover:bg-[#a7f3dc] focus:outline-none'>
 											キャンセル
 										</Link>

@@ -112,6 +112,7 @@ const VideosModal = ({
 
                     <div className="flex justify-end space-x-4">
                       <button
+                        data-testid="cancel-video-button"
                         onClick={toggleModal}
                         type="button"
                         className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none"
@@ -119,9 +120,9 @@ const VideosModal = ({
                         キャンセル
                       </button>
                       <button
+                        data-testid="save-video-button"
                         type="submit"
-                        className="px-4 py-2 text-sm font-medium text-white bg-teal-600 border border-transparent rounded-md hover:bg-teal-700 focus:outline-none"
-                      >
+                        className="px-4 py-2 text-sm font-medium text-white bg-teal-600 border border-transparent rounded-md hover:bg-teal-700 focus:outline-none">
                         保存
                       </button>
                     </div>

@@ -62,6 +62,12 @@ export default function Settings() {
     }
   };
 
+  const handleCancelEmail = (resetForm) => {
+    resetForm(); // Resets the form fields to their initial values
+    setEmailError(""); // Clears any existing error messages
+  };
+
+
   const handlePasswordSubmit = async (values, { setSubmitting }) => {
     try {
       setPasswordError("");
@@ -105,7 +111,7 @@ export default function Settings() {
               validationSchema={emailValidationSchema}
               onSubmit={handleEmailSubmit}
             >
-              {({ errors, touched, isSubmitting }) => (
+              {({ errors, touched, isSubmitting, resetForm }) => (
                 <Form>
                   <div className="space-y-6">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-4 sm:pt-[20px] border border-l-0 border-r-0 border-b-0 border-t-[#EAECF0]">
@@ -127,6 +133,7 @@ export default function Settings() {
                     <div className="w-full flex justify-end pt-4  sm:pt-[26px] border border-l-0 border-r-0 border-t-[#EAECF0] border-b-0">
                       <div className="flex justify-end max-w-80 gap-3">
                         <button
+                          onClick={() => handleCancelEmail(resetForm)}
                           type="button"
                           className="rounded-lg border min-w-[122px] border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                         >
