@@ -29,7 +29,7 @@
         cy.get('input[name="password"]').type('Idenbrid@123abc');
         cy.get('input[name="newPassword"]').type('short');
         cy.get('input[name="confirmPassword"]').type('mismatch');
-        cy.contains('パスワード更新').click();z
+        cy.contains('パスワード更新').click();
         cy.contains('パスワードは8文字以上である必要があります').should('be.visible');
         cy.contains('パスワードが一致しません').should('be.visible');
       });

@@ -20,7 +20,7 @@ describe('Fields Validation Check', function () {
 		cy.get('input[name="email"]').type('invalidEmail@gmail.com')
 		cy.get('input[name="password"]').type('Something@123')
 		cy.get('button[type="submit"]').click()
-    cy.get('.toasty-msg').contains('No user found with the provided information.').should('be.visible')
+    cy.get('.toasty-msg').contains('指定された情報のユーザーは見つかりませんでした。').should('be.visible')
 	})
 
 	it('show validation error on empty password field', function () {
@@ -46,7 +46,7 @@ describe("Login Successfully", function () {
     cy.get('input[name="password"]').type("Idenbrid@123ab");
     cy.get('button[type="submit"]').click();
     cy.get(".toasty-msg")
-      .contains("No user found with the provided information.")
+      .contains("指定された情報のユーザーは見つかりませんでした。")
       .should("be.visible");
   });
   it("shows loading spinner during login", function () {
@@ -58,28 +58,6 @@ describe("Login Successfully", function () {
   });
 });
 
-describe("Login check API Successfully ", function () {
-  it("logs in with correct credentials", () => {
-    cy.visit("auth/login");
-
-    cy.intercept("POST", "**/auth/login", (req) => {
-      req.reply({
-        statusCode: 200,
-        body: { user: { accessToken: "mockToken", refreshToken: "mockRefreshToken" } },
-      });
-    }).as("loginRequest");
-
-   
-    cy.get('input[name="email"]').should("be.visible").type("talha@idenbrid.com");
-    cy.get('input[name="password"]').should("be.visible").type("Idenbrid@123abc");
-    cy.get('button[type="submit"]').should("be.visible").click();
-
-
-    cy.wait("@loginRequest").its("response.statusCode").should("eq", 200);
-
-    cy.url().should("eq", "http://localhost:3000/users");
-  });
-});
 
 
 

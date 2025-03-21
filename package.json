@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "rm -rf .babelrc.json .nyc_output coverage",
     "dev": "next dev --turbopack",
     "build": "next build",
+    "dev:babel": "cp ./config/.babelrc.json .babelrc.json && next dev",
     "start": "next start",
     "lint": "next lint",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "ajs": "^1.3.3",
@@ -31,7 +34,9 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "cypress": "^14.0.3",
+    "@cypress/code-coverage": "^3.13.12",
+    "babel-plugin-istanbul": "^7.0.0",
+    "cypress": "^14.2.0",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",

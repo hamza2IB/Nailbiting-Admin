@@ -159,7 +159,7 @@ describe("Reset Password Attempt", function () {
     cy.get('input[name="confirmPassword"]').type("Idenbrid@123abc");
     cy.get('button[type="submit"]').click();
     cy.get(".toasty-msg")
-      .contains("The OTP provided is invalid. Please check and try again.")
+      .contains("提供されたOTPが無効です。再度確認してください。")
       .should("be.visible");
   });
 });
