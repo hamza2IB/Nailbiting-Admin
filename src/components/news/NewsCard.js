@@ -35,7 +35,7 @@ export default function NewsCard({ news, onDelete, onEdit }) {
 	return (
 		<div className='py-[18px] px-8 bg-white border relative rounded-[10px] '>
 			<div className='flex flex-col gap-2'>
-				<div className='flex items-start justify-between '>6
+				<div className='flex items-start justify-between '>
 					<div>
 						{news ? (
 							<h3 className='text-[#181A20] font-medium'>{news.title}</h3>
