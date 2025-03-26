@@ -35,14 +35,16 @@ describe("Dashboard User Management", () => {
     cy.get(".delete-btn").click();
   });
   it("should View the user", () => {
-    cy.wait(5000);
+   
     cy.get("#eye-icon-btn").click();
+    cy.wait(5000);
     cy.contains("ユーザー詳細").should("be.visible");
     cy.contains("自己評価").should("be.visible");
   });
   it("should View the user in self Valuation Tab", () => {
-    cy.wait(10000);
+  
     cy.get("#eye-icon-btn").click();
+    cy.wait(10000);
     cy.contains("ユーザー詳細").should("be.visible");
     cy.wait(5000);
     cy.get(".self-btn").click();
