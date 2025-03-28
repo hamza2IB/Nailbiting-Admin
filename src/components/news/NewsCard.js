@@ -15,22 +15,22 @@ export default function NewsCard({ news, onDelete, onEdit }) {
 	const [dropdownVisible, setDropdownVisible] = useState(false)
 	const dropdownRef = useRef(null)
 
-	const toggleDropdown = () => {
-		setDropdownVisible(!dropdownVisible)
+	const toggleDropdown = (e) => {
+		setDropdownVisible((prevState) => !prevState)
 	}
 
-	useEffect(() => {
-		const handleClickOutside = (event) => {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-				setDropdownVisible(false)
-			}
-		}
+	// useEffect(() => {
+	// 	const handleClickOutside = (event) => {
+	// 		if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+	// 			setDropdownVisible(false)
+	// 		}
+	// 	}
 
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside)
-		}
-	}, [dropdownVisible])
+	// 	document.addEventListener('mousedown', handleClickOutside)
+	// 	return () => {
+	// 		document.removeEventListener('mousedown', handleClickOutside)
+	// 	}
+	// }, [dropdownVisible])
 
 	return (
 		<div className='py-[18px] px-8 bg-white border relative rounded-[10px] '>
@@ -55,23 +55,21 @@ export default function NewsCard({ news, onDelete, onEdit }) {
 						/>
 					</div>
 				</div>
-				<div
-					className='text-[#717171] text-xs notify-description'
-					dangerouslySetInnerHTML={{
-						__html: news?.body,
-					}}></div>
+				<p className='text-[#717171] text-xs notify-description break-words whitespace-pre-wrap'>{news?.body}</p>
 				{dropdownVisible && (
-					<div ref={dropdownRef} className='absolute right-8 top-8 z-20 bg-white border rounded shadow-md mt-1'>
-						<button className='block px-4 py-2 text-left hover:bg-[#D3FFF2]' onClick={onDelete}>
-							Delete
-						</button>
+					<div
+						ref={dropdownRef}
+						className='absolute w-[150px] right-8 top-10 z-20 bg-white border rounded shadow-md mt-1'>
 						<button
 							className='block w-full px-4 py-2 text-left hover:bg-[#D3FFF2]'
 							onClick={() => {
 								onEdit(news.id)
 								setDropdownVisible(false)
 							}}>
-							Edit
+							編集
+						</button>
+						<button className='block w-full px-4 py-2 border-b text-left hover:bg-[#D3FFF2]' onClick={onDelete}>
+							削除
 						</button>
 					</div>
 				)}

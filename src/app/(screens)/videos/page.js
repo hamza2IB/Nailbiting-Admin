@@ -6,13 +6,16 @@ import Image from 'next/image'
 import NewsHeader from '@/components/news/NewsHeader'
 import VideoTable from '@/components/videos/VideoTable'
 import VideosModal from '@/components/videos/VideosModal'
+import EditVideosModal from '@/components/videos/EditVideosModal'
 import DeleteModal from '@/components/shared/DeleteModal'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { deleteVideo, getAllVideos, addVideo, saveVideoOrder } from '@/actions/videos/videos'
+import { deleteVideo, getAllVideos, addVideo, saveVideoOrder, editVideo } from '@/actions/videos/videos'
 import Shimmer from '@/components/shimmer/videoShimmer'
 export default function ExercisesPage() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [videoToBeEdit, setVideoToBeEdit] = useState({})
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 	const [videoToDelete, setVideoToDelete] = useState(null)
 	const [videos, setVideos] = useState([])
@@ -35,10 +38,17 @@ export default function ExercisesPage() {
 		fetchData()
 	}, [])
 	const toggleModal = () => setIsModalOpen(!isModalOpen)
+	const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen)
 
 	const handleDelete = (id) => {
 		setVideoID(id)
 		setIsDeleteModalOpen(true)
+	}
+
+	const handleEdit = (video) => {
+		setVideoID(video._id)
+		setVideoToBeEdit(video)
+		setIsEditModalOpen(true)
 	}
 
 	const handleConfirmDelete = async () => {
@@ -94,6 +104,7 @@ export default function ExercisesPage() {
 							<VideoTable
 								videos={videos}
 								onDelete={handleDelete}
+								onEdit={handleEdit}
 								setVideoToDelete={setVideoToDelete}
 								moveVideo={handleDragAndDrop}
 								isMaxVideosReached={isMaxVideosReached}
@@ -117,6 +128,25 @@ export default function ExercisesPage() {
 							const data = await addVideo(values)
 							setVideos((prevVideos) => [...prevVideos, data])
 							setIsModalOpen(false)
+						}}
+					/>
+				)}
+
+				{isEditModalOpen && (
+					<EditVideosModal
+						isOpen={isEditModalOpen}
+						toggleModal={toggleEditModal}
+						formData={{
+							_id: videoToBeEdit?._id,
+							youtubeLink: videoToBeEdit?.url,
+							title: videoToBeEdit?.title,
+							description: videoToBeEdit?.description,
+						}}
+						handleChange={() => {}}
+						handleSubmit={async (values) => {
+							const data = await editVideo(values)
+							setVideos((prevVideos) => prevVideos.map((video) => (video._id === data._id ? data : video)))
+							setIsEditModalOpen(false)
 						}}
 					/>
 				)}

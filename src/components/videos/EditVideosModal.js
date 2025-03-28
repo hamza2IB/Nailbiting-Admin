@@ -89,7 +89,7 @@ const VideosModal = ({ isOpen, toggleModal, formData, handleChange, handleSubmit
 														: 'border-gray-300'
 												} rounded-md p-2 w-full`}
 											/>
-											<p className={`text-sm mt-1 ${currentLength >= 150 ? 'text-red-500' : 'text-gray-500'}`}>
+											<p className={`text-sm mt-1 ${currentLength >= 151 ? 'text-red-500' : 'text-gray-500'}`}>
 												現在の文字数: {currentLength}/150
 											</p>
 											<div className='text-red-500 text-sm'>

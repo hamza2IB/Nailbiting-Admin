@@ -22,7 +22,10 @@ function UserDetail({ params }) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false)
-	const [filteredEvaluations, setFilteredEvaluations] = useState([])
+	const [filteredEvaluations, setFilteredEvaluations] = useState({
+		data: [],
+		monthlyPoints: null,
+	})
 	const fetchUser = async () => {
 		if (userId) {
 			try {
@@ -43,12 +46,18 @@ function UserDetail({ params }) {
 	const fetchAssessmentByMonth = async (userId, selectedMonth, selectedYear) => {
 		if (userId && selectedMonth && selectedYear) {
 			try {
-				const month = /^[0-9]+$/.test(selectedMonth) ? selectedMonth : selectedMonth.replace(/[^\d]/g, '');
+				const month = /^[0-9]+$/.test(selectedMonth) ? selectedMonth : selectedMonth.replace(/[^\d]/g, '')
 				setIsLoading(true)
 				const assessments = await getMonthlyAssessments(userId, month, selectedYear)
-				const nailPhotos = assessments.map((result) => result.nailPhoto).flat()
+				const nailPhotos = assessments.data
+					.filter((result) => result.nailPhoto)
+					.map((result) => result.nailPhoto)
+					.flat()
 				setAllNailPhotos(nailPhotos)
-				setFilteredEvaluations(assessments)
+				setFilteredEvaluations({
+					data: assessments.data,
+					monthlyPoints: assessments.monthlyPoints,
+				})
 			} catch (error) {
 				console.error('Failed to fetch assessment data:', error)
 			} finally {
@@ -103,7 +112,7 @@ function UserDetail({ params }) {
 			{count > 0 ? (
 				Array(count)
 					.fill(null)
-					.map((_, i) => <img key={i} src='/svgs/videos/star.svg' alt='Star' />)
+					.map((_, i) => <img key={i} src='/svgs/videos/star.svg' width={20} height={20} alt='Star' />)
 			) : (
 				<span>N/A</span>
 			)}
@@ -112,7 +121,7 @@ function UserDetail({ params }) {
 
 	const renderEvaluationsTable = () => (
 		<div>
-			{filteredEvaluations.length === 0 && !user ? (
+			{filteredEvaluations?.data?.length === 0 && !user ? (
 				<EvaluationShimmer />
 			) : (
 				<>
@@ -129,7 +138,7 @@ function UserDetail({ params }) {
 							</svg>
 
 							<p className='text-[#667085] text-sm' onClick={toggleDropdown}>
-								{selectedMonth || '月の選択'}
+								{(selectedMonth && selectedYear && `${selectedYear}年${selectedMonth}`) || '月の選択'}
 							</p>
 							{isDropdownOpen && (
 								<div className='absolute mt-2 right-0 top-[50px] w-[348px] bg-white border rounded-lg shadow-lg grid grid-cols-3 gap-2 p-2'>
@@ -170,7 +179,7 @@ function UserDetail({ params }) {
 					</div>
 
 					<div className='overflow-auto max-h-[500px]'>
-						{filteredEvaluations.length === 0 ? (
+						{filteredEvaluations?.data?.length === 0 ? (
 							<p className='text-center text-gray-500'>自己評価が見つかりませんでした。</p>
 						) : (
 							<table className='w-full min-w-[800px]'>
@@ -184,7 +193,7 @@ function UserDetail({ params }) {
 									</tr>
 								</thead>
 								<tbody>
-									{filteredEvaluations.map((evaluation, index) => (
+									{filteredEvaluations?.data?.map((evaluation, index) => (
 										<tr key={index} className='border-b last:border-b-0 text-sm'>
 											<td className='py-4 px-6'>
 												{evaluation?.createdAt
@@ -200,7 +209,7 @@ function UserDetail({ params }) {
 											</td>
 											<td className='py-4 px-6'>{renderStars(evaluation?.starRating || 'N/A')}</td>
 											<td className='py-4 px-6 flex justify-center items-center max-w-28'>
-												<div>{evaluation?.monthlyPoints || 'N/A'}</div>
+												<div>{filteredEvaluations?.monthlyPoints}</div>
 											</td>
 											<td className='py-4 px-6'>
 												<div className='flex justify-center'>

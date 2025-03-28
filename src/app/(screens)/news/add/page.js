@@ -1,7 +1,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
-import { useFormik } from 'formik'
+import { useFormik, Field } from 'formik'
 import Link from 'next/link'
 import { useQuill } from 'react-quilljs'
 import 'quill/dist/quill.snow.css'
@@ -32,19 +32,19 @@ export default function CreateNotification() {
 		content: Yup.string().required('本文は必須です'),
 	})
 
-	useEffect(() => {
-		if (quill) {
-			if (formikRef.current) {
-				const handleTextChange = () => {
-					formikRef.current.setFieldValue('content', quill.root.innerHTML)
-				}
-				quill.on('text-change', handleTextChange)
-				return () => {
-					quill.off('text-change', handleTextChange) // Cleanup listener
-				}
-			}
-		}
-	}, [quill])
+	// useEffect(() => {
+	// 	if (quill) {
+	// 		if (formikRef.current) {
+	// 			const handleTextChange = () => {
+	// 				formikRef.current.setFieldValue('content', quill.root.innerHTML)
+	// 			}
+	// 			quill.on('text-change', handleTextChange)
+	// 			return () => {
+	// 				quill.off('text-change', handleTextChange) // Cleanup listener
+	// 			}
+	// 		}
+	// 	}
+	// }, [quill])
 
 	useEffect(() => {
 		const fetchNewsDetails = async () => {
@@ -58,9 +58,9 @@ export default function CreateNotification() {
 						isGlobal: news?.data?.isGlobal,
 						targetUsers: news?.data?.targetUsers,
 					})
-					if (quill) {
-						quill.clipboard.dangerouslyPasteHTML(news?.data?.body || '') // Prefill Quill editor
-					}
+					// if (quill) {
+					// 	quill.clipboard.dangerouslyPasteHTML(news?.data?.body || '') // Prefill Quill editor
+					// }
 				} catch (error) {
 					console.error('Failed to fetch news details:', error)
 				}
@@ -80,7 +80,7 @@ export default function CreateNotification() {
 		}
 		fetchAllUsers()
 		fetchNewsDetails()
-	}, [newsId, quill])
+	}, [newsId])
 
 	console.log(newsDetail)
 
@@ -95,7 +95,7 @@ export default function CreateNotification() {
 						innerRef={formikRef}
 						initialValues={{
 							title: newsDetail.title || '',
-							content: newsDetail.body || '',
+							content: newsDetail.content || '',
 							targetUsers: newsDetail.targetUsers,
 							isGlobal: newsDetail.isGlobal,
 						}}
@@ -190,14 +190,29 @@ export default function CreateNotification() {
 										<label htmlFor='content' className='block text-[18px] text-[#1D2026]'>
 											お知らせの本文
 										</label>
-										<div
+										<div>
+											<Field
+												id='content'
+												name='content'
+												as='textarea'
+												placeholder='お知らせの本文'
+												rows={5}
+												className={`border  ${
+													errors.content || (touched.content && errors.content) ? 'border-red-500' : 'border-gray-300'
+												} rounded-md p-2 w-full`}
+											/>
+											<div className='text-red-500 text-sm'>
+												{errors.content || (touched.content && errors.content && <span>{errors.content}</span>)}
+											</div>
+										</div>
+										{/* <div
 											ref={quillRef}
 											style={{
 												height: '250px',
 												borderBottomLeftRadius: '12px',
 												borderBottomRightRadius: '12px',
-											}}></div>
-										{errors.content && touched.content && <div className='text-red-500'>{errors.content}</div>}
+											}}></div> */}
+										{/* {errors.content && touched.content && <div className='text-red-500'>{errors.content}</div>} */}
 									</div>
 
 									{/* Action Buttons */}
