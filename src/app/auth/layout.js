@@ -1,12 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import Loader from "@/components/Splash";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const SpectraLayout = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const searchParams = useSearchParams(); // Get query parameters
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
