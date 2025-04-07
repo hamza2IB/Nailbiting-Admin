@@ -66,7 +66,7 @@ export default function NewsCard({ news, onDelete, onEdit }) {
 								onEdit(news.id)
 								setDropdownVisible(false)
 							}}>
-							編集
+							編集 
 						</button>
 						<button className='block w-full px-4 py-2 border-b text-left hover:bg-[#D3FFF2]' onClick={onDelete}>
 							削除
