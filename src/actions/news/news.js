@@ -23,9 +23,9 @@ export const addNews = async (values) => {
 }
 export const deleteNews = async (id) => {
 	const response = await api.delete(`/news/delete/${id}`)
-
 	return response.data
 }
+
 export const updateNews = async (id, values) => {
 	const response = await api.put(`/news/update/${id}`, {
 		title: values.title,
